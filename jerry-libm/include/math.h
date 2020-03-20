@@ -56,6 +56,11 @@ double asin (double);
 double atan (double);
 double atan2 (double, double);
 
+/* Hyperbolic functions. */
+double cosh (double x);
+double sinh (double x);
+double tanh (double x);
+
 /* Exponential and logarithmic functions. */
 double exp (double);
 double expm1 (double);
