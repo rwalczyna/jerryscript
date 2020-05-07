@@ -33,19 +33,19 @@ ACCESSOR_READ_ONLY (LIT_MAGIC_STRING_FLAGS,
 
 ACCESSOR_READ_ONLY (LIT_MAGIC_STRING_SOURCE,
                     ecma_builtin_regexp_prototype_get_source,
-                    ECMA_PROPERTY_FIXED)
+                    ECMA_PROPERTY_FLAG_CONFIGURABLE)
 
 ACCESSOR_READ_ONLY (LIT_MAGIC_STRING_GLOBAL,
                     ecma_builtin_regexp_prototype_get_global,
-                    ECMA_PROPERTY_FIXED)
+                    ECMA_PROPERTY_FLAG_CONFIGURABLE)
 
 ACCESSOR_READ_ONLY (LIT_MAGIC_STRING_IGNORECASE_UL,
                     ecma_builtin_regexp_prototype_get_ignorecase,
-                    ECMA_PROPERTY_FIXED)
+                    ECMA_PROPERTY_FLAG_CONFIGURABLE)
 
 ACCESSOR_READ_ONLY (LIT_MAGIC_STRING_MULTILINE,
                     ecma_builtin_regexp_prototype_get_multiline,
-                    ECMA_PROPERTY_FIXED)
+                    ECMA_PROPERTY_FLAG_CONFIGURABLE)
 
 ACCESSOR_READ_ONLY (LIT_MAGIC_STRING_UNICODE,
                     ecma_builtin_regexp_prototype_get_unicode,
@@ -79,12 +79,12 @@ SIMPLE_VALUE (LIT_MAGIC_STRING_IGNORECASE_UL,
 SIMPLE_VALUE (LIT_MAGIC_STRING_MULTILINE,
               ECMA_VALUE_FALSE,
               ECMA_PROPERTY_FIXED)
-#endif /* ENABLED (JERRY_ES2015) */
 
 /* ECMA-262 v5, 15.10.7.5 */
 NUMBER_VALUE (LIT_MAGIC_STRING_LASTINDEX_UL,
               0,
               ECMA_PROPERTY_FLAG_WRITABLE)
+#endif /* ENABLED (JERRY_ES2015) */
 
 #if ENABLED (JERRY_BUILTIN_ANNEXB)
 ROUTINE (LIT_MAGIC_STRING_COMPILE, ecma_builtin_regexp_prototype_compile, 2, 1)
