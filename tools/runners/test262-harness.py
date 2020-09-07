@@ -53,6 +53,7 @@ import sys
 import tempfile
 import xml.dom.minidom
 from collections import Counter
+import multiprocessing
 
 #######################################################################
 # based on _monkeyYaml.py
@@ -670,6 +671,10 @@ def percent_format(partial, total):
                                    ((100.0 * partial)/total,))
 
 
+def run_case(case):
+    return case.index, case.run(case.command_template)
+
+
 class TestSuite(object):
 
     def __init__(self, root, strict_only, non_strict_only, unmarked_default, print_handle, exclude_list_path):
@@ -807,8 +812,22 @@ class TestSuite(object):
         if logname:
             self.logf = open(logname, "w")
 
-        for case in cases:
-            result = case.run(command_template)
+        pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
+
+        cases_for_pool = []
+        for index, case in enumerate(cases):
+            case.command_template = command_template
+            case.index = index
+            cases_for_pool.append(case)
+
+        pool_result = pool.imap_unordered(run_case, cases_for_pool)
+
+        pool_result_sorted = [None] * len(cases_for_pool)
+
+        for index, result in pool_result:
+            pool_result_sorted[index] = result
+
+        for result in pool_result_sorted:
             if logname:
                 self.write_log(result)
             progress.has_run(result)
