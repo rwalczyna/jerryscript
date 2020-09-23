@@ -17,6 +17,7 @@
 
 #include "ecma-arraybuffer-object.h"
 #include "ecma-bigint.h"
+#include "ecma-bigint-object.h"
 #include "ecma-builtin-helpers.h"
 #include "ecma-builtin-typedarray-helpers.h"
 #include "ecma-builtins.h"
@@ -1558,9 +1559,17 @@ ecma_builtin_typedarray_prototype_to_locale_string_helper (ecma_typedarray_info_
 {
   ecma_value_t ret_value = ECMA_VALUE_EMPTY;
   ecma_value_t element_value = ecma_get_typedarray_element (info_p->buffer_p + index, info_p->id);
-
-  ecma_value_t element_obj = ecma_op_create_number_object (element_value);
-
+  ecma_value_t element_obj;
+#if ENABLED (JERRY_BUILTIN_BIGINT)
+  if (ecma_is_value_bigint (element_value))
+  {
+    element_obj = ecma_op_create_bigint_object(element_value);
+  }
+  else
+#endif /* ENABLED (JERRY_BUILTIN_BIGINT) */
+  {
+    element_obj = ecma_op_create_number_object (element_value);
+  }
   ecma_free_value (element_value);
 
   JERRY_ASSERT (!ECMA_IS_VALUE_ERROR (element_obj));

@@ -116,7 +116,7 @@ ecma_builtin_object_prototype_object_value_of (ecma_value_t this_arg) /**< this 
 static ecma_value_t
 ecma_builtin_object_prototype_object_to_locale_string (ecma_value_t this_arg) /**< this argument */
 {
-  return ecma_op_invoke_by_magic_id (this_arg, LIT_MAGIC_STRING_TO_STRING_UL, &this_arg, 1);
+  return ecma_op_invoke_by_magic_id (this_arg, LIT_MAGIC_STRING_TO_STRING_UL, NULL, 0);
 } /* ecma_builtin_object_prototype_object_to_locale_string */
 
 /**
